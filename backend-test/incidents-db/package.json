@@ -7,7 +7,7 @@
     "pretest": "eslint tests/*-test.js",
     "test": "NODE_ENV=test ava tests/*-test.js --verbose",
     "lint": "eslint lib/*.js",
-    "setup": "DEBUG=asmund:* npm run lint && node setup.js"
+    "setup": "npm run lint && node setup.js"
   },
   "author": "Guillermo Lopez",
   "license": "MIT",

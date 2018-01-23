@@ -1,0 +1,24 @@
+{
+  "name": "incidents-api",
+  "version": "1.0.0",
+  "description": "Incidents API REST module",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test ava tests/*-test.js --verbose",
+    "api": "micro -p 5000 api.js"
+  },
+  "author": "Guillermo Lopez",
+  "license": "MIT",
+  "dependencies": {
+    "incidents-db": "file:../incidents-db",
+    "micro": "^9.1.0",
+    "microrouter": "^3.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "casual": "^1.5.19",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
+    "test-listen": "^1.1.0"
+  }
+}
