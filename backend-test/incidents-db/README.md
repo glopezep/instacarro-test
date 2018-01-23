@@ -34,7 +34,7 @@ Create an incident
 ### db#getIncident(incidentId: Number, [callback]) -> Incident
 Retrieve an incident by id
 
-### db#getIncidents([callback]) -> [Incident]
+### db#getIncidents([callback], options) -> [Incident]
 Retrieve an list of incidents
 
 ### db#archiveIncident(incidentId: Number, [callback]) -> Incident
@@ -46,7 +46,7 @@ Create a locality
 ### db#getLocality(localityId: Number, [callback]) -> Locality
 Retrieve a locality by id
 
-### db#getLocalities([callback]) -> [Locality]
+### db#getLocalities([callback], options) -> [Locality]
 Retrieve an list of localities
 
 

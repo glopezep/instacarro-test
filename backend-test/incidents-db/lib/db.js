@@ -31,10 +31,15 @@ class IncidentsDb {
     }
   }
 
-  async getLocalities (callback) {
+  async getLocalities (callback, options = {}) {
     try {
       return Promise.resolve(this.models.locality.findAll({
-        include: [{ all: true, nested: true }]
+        include: [{ all: true, nested: true }],
+        limit: options.limit || null,
+        offset: options.offset || null,
+        order: options.orderBy && options.orderMethod ? (
+          [options.orderBy, options.orderMethod]
+        ) : []
       })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)
@@ -60,11 +65,16 @@ class IncidentsDb {
     }
   }
 
-  async getIncidents (callback) {
+  async getIncidents (callback, options = {}) {
     try {
       return Promise.resolve(this.models.incident.findAll({
         where: { isArchived: false },
-        include: [{ all: true, nested: true }]
+        include: [{ all: true, nested: true }],
+        limit: options.limit || null,
+        offset: options.offset || null,
+        order: options.orderBy && options.orderMethod ? (
+          [options.orderBy, options.orderMethod]
+        ) : []
       })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)

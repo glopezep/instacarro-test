@@ -37,7 +37,7 @@ test('GET /incidents', async t => {
 
   const options = {
     method: 'GET',
-    uri: `${url}/incidents`,
+    uri: `${url}/incidents?page=1`,
     json: true,
     resolveWithFullResponse: true
   }

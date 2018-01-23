@@ -14,19 +14,7 @@ async function saveIncident (req, res) {
   try {
     let incident = await json(req)
     incident = await db.saveIncident(incident)
-    send(res, 201, incident) 
-  } catch (e) {
-    if (e.message.match(/not found/)) {
-      return send(res, 404, { err: e.message })
-    }
-    send(res, 500, { err: e.message })    
-  }
-}
-
-async function getIncidents (req, res) {
-  try {
-    let incidents = await db.getIncidents()
-    send(res, 200, incidents)
+    send(res, 201, incident)
   } catch (e) {
     if (e.message.match(/not found/)) {
       return send(res, 404, { err: e.message })
@@ -35,9 +23,17 @@ async function getIncidents (req, res) {
   }
 }
 
-async function getIncidents(req, res) {
+async function getIncidents (req, res) {
   try {
-    let incidents = await db.getIncidents()
+    const limit = parseInt(req.query.limit)
+    const page = parseInt(req.query.page)
+
+    let incidents = await db.getIncidents({
+      offset: page === 1 ? 0 : page * limit,
+      limit: limit,
+      orderBy: req.query.orderBy,
+      orderMethod: req.query.orderMethod
+    })
     send(res, 200, incidents)
   } catch (e) {
     if (e.message.match(/not found/)) {
@@ -75,7 +71,16 @@ async function saveLocality (req, res) {
 
 async function getLocalities (req, res) {
   try {
-    let localities = await db.getLocalities()
+    const limit = parseInt(req.query.limit)
+    const page = parseInt(req.query.page)
+
+    let localities = await db.getLocalities({
+      offset: page === 1 ? 0 : page * limit,
+      limit: limit,
+      orderBy: req.query.orderBy,
+      orderMethod: req.query.orderMethod
+    })
+
     send(res, 200, localities)
   } catch (e) {
     if (e.message.match(/not found/)) {
@@ -100,8 +105,8 @@ async function getLocality (req, res) {
 module.exports = router(
   post('/incidents', saveIncident),
   get('/incidents', getIncidents),
-  post('/incidents/:incidentId/archive', archiveIncident),  
+  post('/incidents/:incidentId/archive', archiveIncident),
   post('/localities', saveLocality),
   get('/localities', getLocalities),
-  get('/localities/:localityId', getLocality)  
+  get('/localities/:localityId', getLocality)
 )
