@@ -29,7 +29,7 @@ async function getIncidents (req, res) {
     const page = parseInt(req.query.page)
 
     let incidents = await db.getIncidents({
-      offset: page === 1 ? 0 : page * limit,
+      offset: page <= 1 ? 0 : (page * limit) - limit,
       limit: limit,
       orderBy: req.query.orderBy,
       orderMethod: req.query.orderMethod
@@ -75,7 +75,7 @@ async function getLocalities (req, res) {
     const page = parseInt(req.query.page)
 
     let localities = await db.getLocalities({
-      offset: page === 1 ? 0 : page * limit,
+      offset: page <= 1 ? 0 : (page * limit) - limit,
       limit: limit,
       orderBy: req.query.orderBy,
       orderMethod: req.query.orderMethod
