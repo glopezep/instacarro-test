@@ -48,3 +48,7 @@ Retrieve a locality by id
 
 ### db#getLocalities([callback]) -> [Locality]
 Retrieve an list of localities
+
+
+## License
+MIT © [Guillermo Lopez](http://www.guillermolopez.net)

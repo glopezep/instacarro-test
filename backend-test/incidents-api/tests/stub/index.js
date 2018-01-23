@@ -6,11 +6,27 @@ class IncidentsDb {
   }
 
   getIncidents () {
-    return Promise.resolve([])
+    return Promise.resolve(fixtures.getIncidents())
   }
 
-  getIncidents(incidentId) {
-    return Promise.resolve({})
+  archiveIncident (incidentId) {
+    const incident = fixtures.getIncident()
+    incident.isArchived = true
+    return Promise.resolve(incident)
+  }
+
+  saveLocality(locality) {
+    return Promise.resolve(locality)
+  }
+
+  getLocalities () {
+    return Promise.resolve(fixtures.getLocalities())
+  }
+
+  getLocality (localityId) {
+    const locality = fixtures.getLocality()
+    locality._id = localityId
+    return Promise.resolve(locality)
   }
 }
 

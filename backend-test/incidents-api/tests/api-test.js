@@ -46,6 +46,7 @@ test('GET /incidents', async t => {
 
   t.is(response.statusCode, 200)
   t.is(Array.isArray(response.body), Array.isArray(incidents))
+  t.is(response.body.length, incidents.length)
 })
 
 test('POST /incidents/:incidentId/archive', async t => {
@@ -62,4 +63,59 @@ test('POST /incidents/:incidentId/archive', async t => {
   const response = await request(options)
 
   t.is(response.statusCode, 200)
+  t.true(response.body.isArchived)
+})
+
+test('POST /localities', async t => {
+  const locality = fixtures.getLocality()
+  const url = t.context.url
+
+  const options = {
+    method: 'POST',
+    uri: `${url}/localities`,
+    json: true,
+    body: locality,
+    resolveWithFullResponse: true
+  }
+
+  const response = await request(options)
+
+  t.is(response.statusCode, 201)
+  t.is(response.body._id, locality._id)
+  t.is(response.body.name, locality.name)
+})
+
+test('GET /localities', async t => {
+  const localities = fixtures.getLocalities()
+  const url = t.context.url
+
+  const options = {
+    method: 'GET',
+    uri: `${url}/localities`,
+    json: true,
+    resolveWithFullResponse: true
+  }
+
+  const response = await request(options)
+
+  t.is(response.statusCode, 200)
+  t.is(Array.isArray(response.body), Array.isArray(localities))
+  t.is(response.body.length, localities.length)
+})
+
+test('GET /localities/:localityId', async t => {
+  const locality = fixtures.getLocality()
+  const url = t.context.url
+
+  const options = {
+    method: 'GET',
+    uri: `${url}/localities/${locality._id}`,
+    json: true,
+    resolveWithFullResponse: true
+  }
+
+  const response = await request(options)
+
+  t.is(response.statusCode, 200)
+  t.is(response.body._id, locality._id)
 })

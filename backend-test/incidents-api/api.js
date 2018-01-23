@@ -60,10 +60,48 @@ async function archiveIncident (req, res) {
   }
 }
 
+async function saveLocality (req, res) {
+  try {
+    let locality = await json(req)
+    locality = await db.saveLocality(locality)
+    send(res, 201, locality)
+  } catch (e) {
+    if (e.message.match(/not found/)) {
+      return send(res, 404, { err: e.message })
+    }
+    send(res, 500, { err: e.message })
+  }
+}
+
+async function getLocalities (req, res) {
+  try {
+    let localities = await db.getLocalities()
+    send(res, 200, localities)
+  } catch (e) {
+    if (e.message.match(/not found/)) {
+      return send(res, 404, { err: e.message })
+    }
+    send(res, 500, { err: e.message })
+  }
+}
+
+async function getLocality (req, res) {
+  try {
+    let locality = await db.getLocality(req.params.localityId)
+    send(res, 200, locality)
+  } catch (e) {
+    if (e.message.match(/not found/)) {
+      return send(res, 404, { err: e.message })
+    }
+    send(res, 500, { err: e.message })
+  }
+}
+
 module.exports = router(
   post('/incidents', saveIncident),
   get('/incidents', getIncidents),
   post('/incidents/:incidentId/archive', archiveIncident),  
-  // get('/localities', getLocalities),  
-  // get('/localities/:locationId', getLocality)  
+  post('/localities', saveLocality),
+  get('/localities', getLocalities),
+  get('/localities/:localityId', getLocality)  
 )
