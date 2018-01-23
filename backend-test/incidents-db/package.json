@@ -1,0 +1,30 @@
+{
+  "name": "incidents-db",
+  "version": "1.0.0",
+  "description": "Incidents Database Module",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint tests/*-test.js",
+    "test": "NODE_ENV=test ava tests/*-test.js --verbose",
+    "lint": "eslint lib/*.js",
+    "setup": "DEBUG=asmund:* npm run lint && node setup.js"
+  },
+  "author": "Guillermo Lopez",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "sequelize": "^4.32.1",
+    "sequelize-import": "^1.2.1",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "casual": "^1.5.19",
+    "eslint": "^4.16.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
