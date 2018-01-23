@@ -23,7 +23,8 @@ class IncidentsDb {
   async getLocality (localityId, callback) {
     try {
       return Promise.resolve(this.models.locality.findOne({
-        where: { _id: localityId }
+        where: { _id: localityId },
+        include: [ { all: true, nested: true } ]
       })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)
@@ -32,7 +33,9 @@ class IncidentsDb {
 
   async getLocalities (callback) {
     try {
-      return Promise.resolve(this.models.locality.findAll()).asCallback(callback)
+      return Promise.resolve(this.models.locality.findAll({
+        include: [{ all: true, nested: true }]
+      })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)
     }
@@ -49,7 +52,8 @@ class IncidentsDb {
   async getIncident (incidentId, callback) {
     try {
       return Promise.resolve(this.models.incident.findOne({
-        where: { _id: incidentId }
+        where: { _id: incidentId, isArchived: false },
+        include: [{ all: true, nested: true }]
       })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)
@@ -58,7 +62,10 @@ class IncidentsDb {
 
   async getIncidents (callback) {
     try {
-      return Promise.resolve(this.models.incident.findAll()).asCallback(callback)
+      return Promise.resolve(this.models.incident.findAll({
+        where: { isArchived: false },
+        include: [{ all: true, nested: true }]
+      })).asCallback(callback)
     } catch (e) {
       return Promise.reject(e).asCallback(callback)
     }
